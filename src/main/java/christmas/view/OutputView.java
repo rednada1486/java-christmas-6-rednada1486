@@ -1,9 +1,12 @@
 package christmas.view;
 
+import static christmas.view.OutputMessage.*;
+
 import christmas.domain.Category;
 import christmas.domain.Menu;
-
+import christmas.domain.Order;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -24,5 +27,28 @@ public class OutputView {
 
         System.out.println(result);
         System.out.println();
+    }
+
+    public static void printOrderList(List<Order> orderList) {
+        for (Category category : Category.values()) {
+            printOrderInCategory(orderList, category);
+            System.out.println();
+        }
+    }
+
+    private static void printOrderInCategory(List<Order> orderList, Category category) {
+        System.out.println("* " + category.getName());
+
+        List<String> filteredOrderList = orderList.stream()
+                .filter(order -> order.getMenu().getCategory().equals(category))
+                .map(Order::toString)
+                .toList();
+
+        if (filteredOrderList.isEmpty()) {
+            System.out.println(NOTHING.getOutputMessage());
+            return;
+        }
+
+        filteredOrderList.forEach(System.out::println);
     }
 }
