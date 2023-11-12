@@ -2,6 +2,9 @@ package christmas.domain;
 
 import static christmas.domain.Category.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Menu {
     MUSHROOM_SOUP("양송이수프", 6000, APPETIZER),
     TAPAS("타파스", 5500, APPETIZER),
@@ -19,6 +22,14 @@ public enum Menu {
     private final String name;
     private final int price;
     private final Category category;
+
+    private static final Map<String, Menu> BY_NAME = new HashMap<>();
+
+    static {
+        for (Menu menu : values()) {
+            BY_NAME.put(menu.name, menu);
+        }
+    }
 
     Menu(String name, int price, Category category) {
         this.name = name;
@@ -43,4 +54,7 @@ public enum Menu {
         return name + '(' + price + ')';
     }
 
+    public static Menu findByName(String name) {
+        return BY_NAME.get(name);
+    }
 }
