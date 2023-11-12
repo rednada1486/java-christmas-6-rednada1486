@@ -1,7 +1,8 @@
 package christmas.view;
 
 public enum OutputMessage {
-    NOTHING("없음");
+    NOTHING("없음"),
+    ORDER_MENU("<주문 메뉴>");
 
     private final String outputMessage;
 

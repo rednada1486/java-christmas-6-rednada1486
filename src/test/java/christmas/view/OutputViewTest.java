@@ -53,6 +53,6 @@ class OutputViewTest {
         String result = outputStreamCaptor.toString();
 
         // then
-        assertThat(result).contains("제로콜라 1개", "타파스 2개");
+        assertThat(result).contains("<주문 메뉴>","제로콜라 1개", "타파스 2개");
     }
 }

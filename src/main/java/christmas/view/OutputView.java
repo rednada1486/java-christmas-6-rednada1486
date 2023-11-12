@@ -30,6 +30,7 @@ public class OutputView {
     }
 
     public static void printOrderList(List<Order> orderList) {
+        System.out.println(ORDER_MENU.getOutputMessage());
         for (Category category : Category.values()) {
             printOrderInCategory(orderList, category);
             System.out.println();
@@ -51,4 +52,5 @@ public class OutputView {
 
         filteredOrderList.forEach(System.out::println);
     }
+
 }
