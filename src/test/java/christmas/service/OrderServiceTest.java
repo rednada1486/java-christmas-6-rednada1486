@@ -47,5 +47,20 @@ class OrderServiceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(INVALID_ORDER_MESSAGE.getErrorMessage());
     }
-    
+
+    @Test
+    @DisplayName("validateOrderList() 메서드는 주문 리스트의 총 주문 개수가 20보다 클 경우 예외를 발생시킨다.")
+    void validateOrderListShouldThrowIllegalArgumentExceptionWhenTotalMenuCountIsLagerThanTwenty() {
+        // given
+        List<Order> orderList = new ArrayList<>();
+
+        orderList.add(new Order(TAPAS, 20));
+        orderList.add(new Order(ZERO_COLA, 1));
+
+
+        // when, then
+        assertThatThrownBy(() -> orderService.validateOrderList(orderList))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(INVALID_ORDER_MESSAGE.getErrorMessage());
+    }
 }
