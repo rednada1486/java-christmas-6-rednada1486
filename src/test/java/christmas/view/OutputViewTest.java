@@ -53,6 +53,20 @@ class OutputViewTest {
         String result = outputStreamCaptor.toString();
 
         // then
-        assertThat(result).contains("<주문 메뉴>","제로콜라 1개", "타파스 2개");
+        assertThat(result).contains("<주문 메뉴>", "제로콜라 1개", "타파스 2개");
+    }
+
+    @Test
+    @DisplayName("할인 전 총 결제 금액을 형식에 맞게 출력한다.")
+    void printOriginalPaymentAmountCorrectly() {
+        // given
+        int totalPaymentAmount = 8500;
+
+        // when
+        OutputView.printOriginalPaymentAmount(totalPaymentAmount);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).contains("<할인 전 총주문 금액>", "8,500원");
     }
 }
