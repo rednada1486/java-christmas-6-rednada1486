@@ -1,21 +1,18 @@
 package christmas.controller;
 
+import static christmas.domain.Menu.*;
+import static org.assertj.core.api.Assertions.*;
+
 import camp.nextstep.edu.missionutils.Console;
-import christmas.domain.Menu;
 import christmas.domain.Order;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
-import static christmas.domain.Menu.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReservationControllerTest {
     private ReservationController reservationController;
