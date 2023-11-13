@@ -53,4 +53,9 @@ public class OutputView {
         filteredOrderList.forEach(System.out::println);
     }
 
+    public static void printOriginalPaymentAmount(int originalPaymentAmount) {
+        System.out.println(TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT.getOutputMessage());
+        String formattedNumber = String.format("%,d", originalPaymentAmount);
+        System.out.println(formattedNumber+"원");
+    }
 }
