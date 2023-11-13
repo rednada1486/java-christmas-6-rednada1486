@@ -12,13 +12,12 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public static void printAllMenu() {
-        System.out.println(MENU.getOutputMessage());
-        System.out.println();
+        System.out.println("\n" + MENU.getOutputMessage() + "\n");
         for (Category category : Category.values()) {
             printAllMenuInCategory(category);
             System.out.println();
         }
-        System.out.println(DIVIDER_LINE.getOutputMessage());
+        System.out.println(DIVIDER_LINE.getOutputMessage() + "\n");
     }
 
     private static void printAllMenuInCategory(Category category) {
@@ -59,6 +58,6 @@ public class OutputView {
     public static void printOriginalPaymentAmount(int originalPaymentAmount) {
         System.out.println(TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT.getOutputMessage());
         String formattedNumber = String.format("%,d", originalPaymentAmount);
-        System.out.println(formattedNumber+"원");
+        System.out.println(formattedNumber + "원");
     }
 }
