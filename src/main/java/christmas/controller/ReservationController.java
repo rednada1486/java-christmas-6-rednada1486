@@ -6,6 +6,7 @@ import static christmas.view.OutputView.*;
 import christmas.domain.Order;
 import christmas.service.OrderService;
 import christmas.service.PaymentService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class ReservationController {
     }
 
     public void play() {
-        List<Order> orderList = receiveOrder();
+        List<Order> orderList = receiveOrderUntilPass();
         timeSleep(1500);
         int originalPaymentAmount = calculateAndShowOriginalPaymentAmount(orderList);
     }
@@ -36,6 +37,11 @@ public class ReservationController {
 
         return orderList;
     }
+
+    public List<Order> receiveOrderUntilPass() {
+        return receiveInputUntilPass(this::receiveOrder);
+    }
+
 
     public int calculateAndShowOriginalPaymentAmount(List<Order> orderList) {
         int originalPaymentAmount = paymentService.calculateOriginalPaymentAmount(orderList);
@@ -63,5 +69,20 @@ public class ReservationController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public <T> T receiveInputUntilPass(ExceptionSupplier<T> inputMethod) {
+        T result = null;
+
+        while (true) {
+            try {
+                result = inputMethod.get();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return result;
     }
 }
