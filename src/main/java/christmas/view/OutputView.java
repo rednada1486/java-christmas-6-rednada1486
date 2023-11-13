@@ -12,9 +12,13 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public static void printAllMenu() {
+        System.out.println(MENU.getOutputMessage());
+        System.out.println();
         for (Category category : Category.values()) {
             printAllMenuInCategory(category);
+            System.out.println();
         }
+        System.out.println(DIVIDER_LINE.getOutputMessage());
     }
 
     private static void printAllMenuInCategory(Category category) {
@@ -26,7 +30,6 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
 
         System.out.println(result);
-        System.out.println();
     }
 
     public static void printOrderList(List<Order> orderList) {

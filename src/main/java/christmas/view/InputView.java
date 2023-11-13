@@ -7,7 +7,6 @@ import static christmas.view.OutputView.*;
 public class InputView {
     public static String readOrderList() {
         System.out.println(WHAT_WOULD_YOU_LIKE_TO_ORDER.getInputMessage());
-        System.out.println();
         printAllMenu();
         return readLine();
     }
