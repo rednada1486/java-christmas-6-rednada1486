@@ -32,5 +32,15 @@ class OrderTest {
         }
     }
 
+    @Test
+    @DisplayName("존재하지 않는 메뉴로 Order 객체를 생성하면 예외를 발생시킨다.")
+    void orderGeneratorThrowIllegalArgumentExceptionWhenUnavailableMenuIsInputted() {
+        // given
+        String userInput = "제로콜리-1";
 
+        // when, then
+        assertThatThrownBy(() -> new Order(userInput))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(INVALID_ORDER_MESSAGE.getErrorMessage());
+    }
 }
