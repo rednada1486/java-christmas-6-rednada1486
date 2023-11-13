@@ -33,6 +33,10 @@ public class Order {
         this.count = count;
     }
 
+    public int calculateSubTotal() {
+        return menu.getPrice() * count;
+    }
+
     @Override
     public String toString() {
         return menu.getName() + " " + count + '개';
