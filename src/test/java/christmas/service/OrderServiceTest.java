@@ -63,4 +63,20 @@ class OrderServiceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(INVALID_ORDER_MESSAGE.getErrorMessage());
     }
+
+    @Test
+    @DisplayName("validateOrderList() 메서드는 음료만 주문할 경우 예외를 발생시킨다.")
+    void validateOrderListShouldThrowIllegalArgumentExceptionWhenOrderListConsistOfOnlyBeverage() {
+        // given
+        List<Order> orderList = new ArrayList<>();
+
+        orderList.add(new Order(ZERO_COLA, 1));
+        orderList.add(new Order(RED_WINE, 2));
+
+
+        // when, then
+        assertThatThrownBy(() -> orderService.validateOrderList(orderList))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(INVALID_ORDER_MESSAGE.getErrorMessage());
+    }
 }
