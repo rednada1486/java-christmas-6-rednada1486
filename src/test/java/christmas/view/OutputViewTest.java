@@ -1,10 +1,7 @@
 package christmas.view;
 
-import christmas.domain.Menu;
 import christmas.domain.Order;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
-import org.mockito.internal.matchers.Or;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
