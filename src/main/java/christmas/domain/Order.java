@@ -19,7 +19,7 @@ public class Order {
         String[] splitInput = menuHyphenCount.split("(?=-\\d+$)");
 
         this.menu = Menu.findByName(splitInput[0]);
-        this.count = Integer.parseInt(splitInput[1]);
+        this.count = Integer.parseInt(splitInput[1].substring(1));
     }
 
     public Menu getMenu() {
@@ -43,13 +43,13 @@ public class Order {
     }
 
     private void validate(String menuHyphenCount) {
-        if (checkMenuHyphenCount(menuHyphenCount)){
+        if (!checkMenuHyphenCount(menuHyphenCount)){
             throw new IllegalArgumentException(INVALID_ORDER_MESSAGE.getErrorMessage());
         }
 
         String[] splitInput = menuHyphenCount.split("(?=-\\d+$)");
 
-        if (!checkMenu(splitInput[0]) || !checkCount(splitInput[1])) {
+        if (!checkMenu(splitInput[0]) || !checkCount(splitInput[1].substring(1))) {
             throw new IllegalArgumentException(INVALID_ORDER_MESSAGE.getErrorMessage());
         }
     }
@@ -64,7 +64,7 @@ public class Order {
     }
 
     private boolean checkCount(String countStr) {
-        int count = 0;
+        int count;
 
         try {
             count = Integer.parseInt(countStr);
