@@ -33,11 +33,12 @@ class ReservationControllerTest {
         Console.close();
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"타파스-1,제로콜라-1"})
     @DisplayName("receiveOrder 메서드는 유저 입력값을 변환하여 주문 목록을 반환한다.")
-    void receiveOrderShouldReturnOrderList() {
+    void receiveOrderShouldReturnOrderList(String input) {
         // given
-        System.setIn(createUserInput("타파스-1,제로콜라-1"));
+        System.setIn(createUserInput(input));
 
         // when
         List<Order> result = reservationController.receiveOrder();
@@ -61,5 +62,20 @@ class ReservationControllerTest {
         assertThatThrownBy(() -> reservationController.receiveOrder())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(INVALID_ORDER_MESSAGE.getErrorMessage());
+    }
+
+    @Test
+    @DisplayName("receiveOrderUntilPass 메서드는 사용자가 잘못된 주문을 한 경우 다시 입력을 받는다.")
+    void receiveOrderUntilPass() {
+        // given
+        System.setIn(createUserInput("메뉴-1\n타파스-1"));
+
+        // when
+        List<Order> orderList = reservationController.receiveOrderUntilPass();
+
+        // then
+        assertThat(orderList).hasSize(1);
+        assertThat(orderList.get(0).getMenu()).isEqualTo(TAPAS);
+        assertThat(orderList.get(0).getCount()).isEqualTo(1);
     }
 }
