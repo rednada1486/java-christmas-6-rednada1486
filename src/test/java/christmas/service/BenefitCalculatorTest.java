@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -208,11 +207,11 @@ class BenefitCalculatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"2", "3", "9", "10", "18","19"})
+    @ValueSource(strings = {"2", "3", "9", "10", "18", "19"})
     @DisplayName("할인 전 총 주문 금액이 120000보다 작은 경우, 증정 이벤트가 적용되지 않는다.")
     void calculateGiftEventAmountWhenOriginalPaymentIsSmallerThan120000(String count) {
         List<Order> orderList = new ArrayList<>();
-        orderList.add(new Order("양송이수프-"+count));
+        orderList.add(new Order("양송이수프-" + count));
 
         Date date = new Date("26"); // Starday
 
@@ -223,10 +222,10 @@ class BenefitCalculatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"20", "21", "22", "23", "24"})
-    @DisplayName("할인 전 총 주문 금액이 120000보다 크거나 같은 경우, 증정 이벤트가 적용되지 않는다.")
+    @DisplayName("할인 전 총 주문 금액이 120000보다 크거나 같은 경우, 증정 이벤트가 적용된다.")
     void calculateGiftEventAmountWhenOriginalPaymentIsGreaterThanOrEqualTo120000(String count) {
         List<Order> orderList = new ArrayList<>();
-        orderList.add(new Order("양송이수프-"+count));
+        orderList.add(new Order("양송이수프-" + count));
 
         Date date = new Date("26"); // Starday
 
@@ -234,4 +233,22 @@ class BenefitCalculatorTest {
 
         assertThat(appliedBenefit.get(GIFT_EVENT)).isEqualTo(25000);
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"23", "24"}) // 23: 주말, 24: 평일
+    @DisplayName("총 주문 금액이 만원이 되지 않을 때는 전체 할인이 적용되지 않는다.")
+    void allDiscountShouldNotApplyWhenOriginalPayAmountIsLessThan10000Won(String day) {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("양송이수프-1"));
+
+        Date date = new Date(day);
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        for (Benefit benefit : Benefit.values()) {
+            assertThat(appliedBenefit.get(benefit)).isEqualTo(0);
+        }
+    }
+
+
 }
