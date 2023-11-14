@@ -1,9 +1,9 @@
 package christmas.domain;
 
-import static christmas.domain.Category.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import static christmas.domain.Category.*;
 
 public enum Menu {
     MUSHROOM_SOUP("양송이수프", 6000, APPETIZER),

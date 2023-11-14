@@ -1,17 +1,36 @@
 package christmas.domain;
 
-import static christmas.view.ErrorMessage.*;
-
 import christmas.utils.CalendarUtil;
 
+import java.util.List;
+
+import static christmas.view.ErrorMessage.INVALID_DATE_MESSAGE;
+
 public class Date {
-    private final int year = 2023;
-    private final int month = 12;
+    private final int year;
+    private final int month;
     private final int day;
 
+    public Date(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
     public Date(String userInput) {
+        this.year = 2023;
+        this.month = 12;
+
         validate(userInput);
         this.day = Integer.parseInt(userInput);
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
     }
 
     public int getDay() {
@@ -42,12 +61,17 @@ public class Date {
         return CalendarUtil.isDayInCorrectRange(year, month, userInput);
     }
 
-    private boolean isWeekend() {
-        return true;
+    public boolean isWeekend() {
+        return CalendarUtil.isFriday(year, month, day) || CalendarUtil.isSaturday(year, month, day);
     }
 
-    private boolean isStarDay() {
-        return true;
+    public boolean isWeekday() {
+        return !isWeekend();
+    }
+
+    public boolean isStarDay() {
+        List<Integer> statDayList = List.of(25);
+        return CalendarUtil.isSunday(year, month, day) || statDayList.contains(day);
     }
 
     @Override

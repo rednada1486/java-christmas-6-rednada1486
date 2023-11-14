@@ -1,16 +1,18 @@
 package christmas.view;
 
-import christmas.domain.Order;
-import org.junit.jupiter.api.*;
+import static christmas.domain.Menu.TAPAS;
+import static christmas.domain.Menu.ZERO_COLA;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.Order;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import static christmas.domain.Menu.*;
-import static org.assertj.core.api.Assertions.*;
-
 
 class OutputViewTest {
     private final PrintStream standardOut = System.out;

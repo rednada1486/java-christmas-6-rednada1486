@@ -1,7 +1,7 @@
 package christmas.service;
 
-import static christmas.domain.Category.*;
-import static christmas.view.ErrorMessage.*;
+import static christmas.domain.Category.BEVERAGE;
+import static christmas.view.ErrorMessage.INVALID_ORDER_MESSAGE;
 
 import christmas.domain.Menu;
 import christmas.domain.Order;
