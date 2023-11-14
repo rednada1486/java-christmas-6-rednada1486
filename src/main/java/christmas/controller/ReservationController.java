@@ -7,6 +7,7 @@ import christmas.domain.Date;
 import christmas.domain.Order;
 import christmas.service.OrderService;
 import christmas.service.PaymentService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class ReservationController {
     public Date registerReservationDate() {
         String userInput = readReservationDate();
         return new Date(userInput);
+    }
+
+    public Date registerReservationDateUntilPass() {
+        return receiveInputUntilPass(this::registerReservationDate);
     }
 
     public List<Order> receiveOrder() {
