@@ -7,11 +7,20 @@ import christmas.utils.CalendarUtil;
 import java.util.List;
 
 public class Date {
-    private final int year = 2023;
-    private final int month = 12;
-    private final int day;
+    private int year;
+    private int month;
+    private int day;
+
+    public Date(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
 
     public Date(String userInput) {
+        this.year = 2023;
+        this.month = 12;
+
         validate(userInput);
         this.day = Integer.parseInt(userInput);
     }
