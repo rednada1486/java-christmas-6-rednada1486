@@ -77,7 +77,16 @@ public class BenefitCalculator {
     }
 
     private int calculateWeekendDiscountAmount() {
-        return 0;
+        if (!date.isWeekend()) {
+            return 0;
+        }
+
+        int mainCount = orderList.stream()
+                .filter(order -> order.getMenu().getCategory() == MAIN_COURSE)
+                .mapToInt(Order::getCount)
+                .sum();
+
+        return WEEKEND_DISCOUNT.getDiscountAmount() * mainCount;
     }
 
     private int calculateStardayDiscountAmount() {
