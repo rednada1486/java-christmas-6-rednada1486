@@ -1,11 +1,11 @@
 package christmas.service;
 
 import static christmas.domain.Benefit.*;
+import static christmas.domain.Category.*;
 
 import christmas.domain.Benefit;
 import christmas.domain.Date;
 import christmas.domain.Order;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +64,16 @@ public class BenefitCalculator {
     }
 
     private int calculateWeekdayDiscountAmount() {
-        return 0;
+        if (!date.isWeekday()) {
+            return 0;
+        }
+
+        int desertCount = orderList.stream()
+                .filter(order -> order.getMenu().getCategory() == DESSERT)
+                .mapToInt(Order::getCount)
+                .sum();
+
+        return WEEKDAY_DISCOUNT.getDiscountAmount() * desertCount;
     }
 
     private int calculateWeekendDiscountAmount() {
