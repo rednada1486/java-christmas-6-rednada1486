@@ -90,7 +90,11 @@ public class BenefitCalculator {
     }
 
     private int calculateStardayDiscountAmount() {
-        return 0;
+        if (!date.isStarDay()) {
+            return 0;
+        }
+
+        return STARDAY_DISCOUNT.getDiscountAmount();
     }
 
     private int calculateGiftEventAmount() {
