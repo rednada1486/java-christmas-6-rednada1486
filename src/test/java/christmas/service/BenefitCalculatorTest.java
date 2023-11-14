@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,7 @@ class BenefitCalculatorTest {
 
     @Test
     @DisplayName("평일이 아닌 경우 평일 할인이 적용되지 않는다.")
-    void calculateWeekdayDiscountAmountShouldReturnZeroWhenDateIsNotWeekday() {
+    void calculateWeekdayDiscountAmountShouldReturnZeroWhenDayIsNotWeekday() {
         List<Order> orderList = new ArrayList<>();
         orderList.add(new Order("티본스테이크-1"));
         orderList.add(new Order("바비큐립-1"));
@@ -125,5 +126,52 @@ class BenefitCalculatorTest {
         Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
 
         assertThat(appliedBenefit.get(WEEKDAY_DISCOUNT)).isEqualTo(6069);
+    }
+
+    @Test
+    @DisplayName("주말이 아닌 경우 주말 할인이 적용되지 않는다.")
+    void calculateWeekendDiscountAmountShouldReturnZeroWhenDayIsNotWeekend() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("바비큐립-1"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("제로콜라-1"));
+
+        Date date = new Date("3"); // 평일
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(WEEKEND_DISCOUNT)).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("주말이고 메인코스의 종류가 한가지 일 때, 주말 할인 금액을 정확하게 계산한다.")
+    void calculateWeekendDiscountAmountCorrectlyWhenDayIsWeekendAndMainKindIsOne() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("제로콜라-1"));
+
+        Date date = new Date("2"); // 주말
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(WEEKEND_DISCOUNT)).isEqualTo(2023);
+    }
+
+    @Test
+    @DisplayName("주말이고 메인코스의 종류가 두가지 일 때, 주말 할인 금액을 정확하게 계산한다.")
+    void calculateWeekendDiscountAmountCorrectlyWhenDayIsWeekendAndMainKindIsTwo() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("바비큐립-2"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("제로콜라-1"));
+
+        Date date = new Date("2"); // 주말
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(WEEKEND_DISCOUNT)).isEqualTo(6069);
     }
 }
