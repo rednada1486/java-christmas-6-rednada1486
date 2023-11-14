@@ -5,6 +5,7 @@ import static christmas.domain.Category.*;
 
 import christmas.domain.Benefit;
 import christmas.domain.Date;
+import christmas.domain.Menu;
 import christmas.domain.Order;
 import java.util.HashMap;
 import java.util.List;
@@ -93,14 +94,15 @@ public class BenefitCalculator {
         if (!date.isStarDay()) {
             return 0;
         }
-
         return STARDAY_DISCOUNT.getDiscountAmount();
     }
 
     private int calculateGiftEventAmount() {
-        return 0;
+        if (originalPaymentAmount < 120000) {
+            return 0;
+        }
+        return Menu.CHAMPAGNE.getPrice();
     }
-
 
     public int calculateOriginalPaymentAmount(List<Order> orderList) {
         return orderList.stream()
