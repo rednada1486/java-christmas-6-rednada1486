@@ -206,4 +206,32 @@ class BenefitCalculatorTest {
 
         assertThat(appliedBenefit.get(STARDAY_DISCOUNT)).isEqualTo(0);
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"2", "3", "9", "10", "18","19"})
+    @DisplayName("할인 전 총 주문 금액이 120000보다 작은 경우, 증정 이벤트가 적용되지 않는다.")
+    void calculateGiftEventAmountWhenOriginalPaymentIsSmallerThan120000(String count) {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("양송이수프-"+count));
+
+        Date date = new Date("26"); // Starday
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(GIFT_EVENT)).isEqualTo(0);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"20", "21", "22", "23", "24"})
+    @DisplayName("할인 전 총 주문 금액이 120000보다 크거나 같은 경우, 증정 이벤트가 적용되지 않는다.")
+    void calculateGiftEventAmountWhenOriginalPaymentIsGreaterThanOrEqualTo120000(String count) {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("양송이수프-"+count));
+
+        Date date = new Date("26"); // Starday
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(GIFT_EVENT)).isEqualTo(25000);
+    }
 }
