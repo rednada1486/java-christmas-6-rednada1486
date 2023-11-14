@@ -5,8 +5,8 @@ import static christmas.view.ErrorMessage.*;
 import java.util.regex.Pattern;
 
 public class Order {
-    private Menu menu;
-    private int count;
+    private final Menu menu;
+    private final int count;
 
     public Order(Menu menu, int count) {
         this.menu = menu;
@@ -26,16 +26,8 @@ public class Order {
         return menu;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
     public int getCount() {
         return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     public int calculateSubTotal() {
@@ -74,7 +66,6 @@ public class Order {
 
         return count >= 1;
     }
-
 
     @Override
     public String toString() {

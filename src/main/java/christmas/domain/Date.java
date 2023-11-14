@@ -9,10 +9,6 @@ public class Date {
     private final int month = 12;
     private final int day;
 
-    public Date(int day) {
-        this.day = day;
-    }
-
     public Date(String userInput) {
         validate(userInput);
         this.day = Integer.parseInt(userInput);
@@ -48,18 +44,6 @@ public class Date {
 
     private boolean isStarDay() {
         return true;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public int getDay() {
-        return day;
     }
 
     @Override
