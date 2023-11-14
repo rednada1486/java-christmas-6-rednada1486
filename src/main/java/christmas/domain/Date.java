@@ -4,6 +4,8 @@ import static christmas.view.ErrorMessage.*;
 
 import christmas.utils.CalendarUtil;
 
+import java.util.List;
+
 public class Date {
     private final int year = 2023;
     private final int month = 12;
@@ -42,12 +44,17 @@ public class Date {
         return CalendarUtil.isDayInCorrectRange(year, month, userInput);
     }
 
-    private boolean isWeekend() {
-        return true;
+    public boolean isWeekend() {
+        return CalendarUtil.isFriday(year, month, day) || CalendarUtil.isSaturday(year, month, day);
     }
 
-    private boolean isStarDay() {
-        return true;
+    public boolean isWeekday() {
+        return !isWeekend();
+    }
+
+    public boolean isStarDay() {
+        List<Integer> statDayList = List.of(25);
+        return CalendarUtil.isSunday(year, month, day) || statDayList.contains(day);
     }
 
     @Override
