@@ -64,7 +64,7 @@ public class CalendarUtil {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
-    public static boolean isInCorrectRange(int year, int month, int day) {
+    public static boolean isDayInCorrectRange(int year, int month, int day) {
         int endDay = getEndDayOfMonth(year, month);
         return day >= 1 && day <= endDay;
     }
