@@ -174,4 +174,36 @@ class BenefitCalculatorTest {
 
         assertThat(appliedBenefit.get(WEEKEND_DISCOUNT)).isEqualTo(6069);
     }
+
+    @Test
+    @DisplayName("별표가 표시된 날짜일 때, 특별 할인 금액을 정확하게 계산한다.")
+    void calculateStardayDiscountAmountCorrectlyWhenDayIsStarday() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("바비큐립-2"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("제로콜라-1"));
+
+        Date date = new Date("25"); // Starday
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(STARDAY_DISCOUNT)).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("별표가 표시되지 않은 날짜일 때, 특별 할인 금액을 정확하게 계산한다.")
+    void calculateStardayDiscountAmountCorrectlyWhenDayIsNotStarday() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("바비큐립-2"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("제로콜라-1"));
+
+        Date date = new Date("26"); // Starday
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(STARDAY_DISCOUNT)).isEqualTo(0);
+    }
 }
