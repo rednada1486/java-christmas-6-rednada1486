@@ -24,7 +24,7 @@ public class Date {
 
         int tempDay = Integer.parseInt(userInput);
 
-        if (checkDayInRange(tempDay)) {
+        if (!checkDayInRange(tempDay)) {
             throw new IllegalArgumentException(INVALID_DATE_MESSAGE.getErrorMessage());
         }
     }
