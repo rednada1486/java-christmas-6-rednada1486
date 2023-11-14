@@ -6,32 +6,26 @@ import static christmas.view.OutputView.*;
 import christmas.domain.Date;
 import christmas.domain.Order;
 import christmas.service.OrderService;
-import christmas.service.PaymentService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationController {
     private final OrderService orderService;
-    private final PaymentService paymentService;
 
     public ReservationController() {
         this.orderService = new OrderService();
-        this.paymentService = new PaymentService();
     }
 
     public void play() {
         printIntroduction();
 
         Date date = registerReservationDateUntilPass();
-        timeSleep(1500);
 
         List<Order> orderList = receiveOrderUntilPass();
-        timeSleep(1500);
 
         printBenefitGuide(date);
 
-        int originalPaymentAmount = calculateAndShowOriginalPaymentAmount(orderList);
         System.out.println();
     }
 
@@ -51,7 +45,6 @@ public class ReservationController {
 
         orderService.validateOrderList(orderList);
 
-        timeSleep(1000);
         printOrderList(orderList);
 
         return orderList;
@@ -59,13 +52,6 @@ public class ReservationController {
 
     public List<Order> receiveOrderUntilPass() {
         return receiveInputUntilPass(this::receiveOrder);
-    }
-
-
-    public int calculateAndShowOriginalPaymentAmount(List<Order> orderList) {
-        int originalPaymentAmount = paymentService.calculateOriginalPaymentAmount(orderList);
-        printOriginalPaymentAmount(originalPaymentAmount);
-        return originalPaymentAmount;
     }
 
     private List<Order> userInputToOrderList(String userInput) {
@@ -80,14 +66,6 @@ public class ReservationController {
         }
 
         return orderList;
-    }
-
-    public void timeSleep(long ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public <T> T receiveInputUntilPass(ExceptionSupplier<T> inputMethod) {
