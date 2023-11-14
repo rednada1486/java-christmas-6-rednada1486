@@ -3,9 +3,11 @@ package christmas.controller;
 import static christmas.view.InputView.*;
 import static christmas.view.OutputView.*;
 
+import christmas.domain.Date;
 import christmas.domain.Order;
 import christmas.service.OrderService;
 import christmas.service.PaymentService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +21,27 @@ public class ReservationController {
     }
 
     public void play() {
+        printIntroduction();
+
+        Date date = registerReservationDateUntilPass();
+        timeSleep(1500);
+
         List<Order> orderList = receiveOrderUntilPass();
         timeSleep(1500);
+
+        printBenefitGuide(date);
+
         int originalPaymentAmount = calculateAndShowOriginalPaymentAmount(orderList);
+        System.out.println();
+    }
+
+    public Date registerReservationDate() {
+        String userInput = readReservationDate();
+        return new Date(userInput);
+    }
+
+    public Date registerReservationDateUntilPass() {
+        return receiveInputUntilPass(this::registerReservationDate);
     }
 
     public List<Order> receiveOrder() {

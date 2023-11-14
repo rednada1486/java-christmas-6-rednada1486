@@ -5,6 +5,7 @@ import static christmas.view.ErrorMessage.*;
 import static org.assertj.core.api.Assertions.*;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.domain.Date;
 import christmas.domain.Order;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,5 +78,43 @@ class ReservationControllerTest {
         assertThat(orderList).hasSize(1);
         assertThat(orderList.get(0).getMenu()).isEqualTo(TAPAS);
         assertThat(orderList.get(0).getCount()).isEqualTo(1);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "15", "31"})
+    void registerReservationDateShouldNotThrowExceptionWhenCorrectValueInputted(String input) {
+        // given
+        System.setIn(createUserInput(input));
+
+        // when
+        Date date = reservationController.registerReservationDate();
+
+        // then
+        assertThat(date.getDay()).isEqualTo(Integer.parseInt(input));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a", "1a", "*", "0", "32"})
+    void registerReservationDateShouldThrowExceptionWhenWrongValueInputted(String input) {
+        // given
+        System.setIn(createUserInput(input));
+
+        // when, then
+        assertThatThrownBy(() -> reservationController.registerReservationDate())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(INVALID_DATE_MESSAGE.getErrorMessage());
+    }
+
+    @Test
+    @DisplayName("registerReservationDateUntilPass 메서드는 유저가 잘못된 값을 입력하면 값을 다시 입력 받는다.")
+    void registerReservationDateUntilPass() {
+        // given
+        System.setIn(createUserInput("a\n0\n1"));
+
+        // when
+        Date date = reservationController.registerReservationDateUntilPass();
+
+        // then
+        assertThat(date.getDay()).isEqualTo(1);
     }
 }

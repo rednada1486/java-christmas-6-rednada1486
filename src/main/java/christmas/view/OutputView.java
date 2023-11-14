@@ -3,6 +3,7 @@ package christmas.view;
 import static christmas.view.OutputMessage.*;
 
 import christmas.domain.Category;
+import christmas.domain.Date;
 import christmas.domain.Menu;
 import christmas.domain.Order;
 import java.util.Arrays;
@@ -10,14 +11,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    public static void printIntroduction() {
+        System.out.println(INTRODUCE_PROGRAM.getOutputMessage() + "\n");
+    }
+
+    public static void printBenefitGuide(Date date) {
+        System.out.println(date.toString() + PREVIEW_THE_EVENT_BENEFIT_IN_THE_DAY.getOutputMessage() + "\n");
+    }
+
 
     public static void printAllMenu() {
-        System.out.println("\n" + MENU.getOutputMessage() + "\n");
+        System.out.println("\n" + MENU.getOutputMessage());
         for (Category category : Category.values()) {
             printAllMenuInCategory(category);
-            System.out.println();
+            if (category != Category.BEVERAGE) {
+                System.out.println();
+            }
         }
-        System.out.println(DIVIDER_LINE.getOutputMessage() + "\n");
+        System.out.println(DIVIDER_LINE.getOutputMessage());
     }
 
     private static void printAllMenuInCategory(Category category) {
@@ -52,7 +63,7 @@ public class OutputView {
             return;
         }
 
-        filteredOrderList.forEach(System.out::println);
+        filteredOrderList.forEach(order-> System.out.println("- "+order));
     }
 
     public static void printOriginalPaymentAmount(int originalPaymentAmount) {
