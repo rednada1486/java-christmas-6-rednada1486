@@ -25,7 +25,7 @@ class BenefitCalculatorTest {
 
     @Test
     @DisplayName("12월 3일 기준, BenefitCalculator가 크리스마스 디데이 할인을 잘 계산하는 지 확인한다")
-    void  calculateChristmasDDayDiscountAmountCorrectlyWhenDayIsDecember3rd() {
+    void calculateChristmasDDayDiscountAmountCorrectlyWhenDayIsDecember3rd() {
         // given
         List<Order> orderList = new ArrayList<>();
         orderList.add(new Order("티본스테이크-1"));
@@ -60,7 +60,7 @@ class BenefitCalculatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"26","27","28","29","30","31"})
+    @ValueSource(strings = {"26", "27", "28", "29", "30", "31"})
     @DisplayName("12월 25일이 지났을 때, BenefitCalculator가 크리스마스 디데이 할인을 잘 계산하는 지 확인한다")
     void calculateChristmasDDayDiscountAmountShouldReturnZeroWhenDayAfterDecember25th() {
         // given
@@ -76,5 +76,54 @@ class BenefitCalculatorTest {
         Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
 
         assertThat(appliedBenefit.get(CHRISTMAS_D_DAY_DISCOUNT)).isEqualTo(3400);
+    }
+
+    @Test
+    @DisplayName("평일이 아닌 경우 평일 할인이 적용되지 않는다.")
+    void calculateWeekdayDiscountAmountShouldReturnZeroWhenDateIsNotWeekday() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("바비큐립-1"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("제로콜라-1"));
+
+        Date date = new Date("2"); // 주말
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(WEEKDAY_DISCOUNT)).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("평일이고, 디저트 종류가 한가지 일 때, 평일 할인 금액을 정확하게 계산한다.")
+    void calculateWeekdayDiscountAmountCorrectlyWhenDayIsWeekdayAndDesertKindIsOne() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("바비큐립-1"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("제로콜라-1"));
+
+        Date date = new Date("3"); // 평일
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(WEEKDAY_DISCOUNT)).isEqualTo(4046);
+    }
+
+    @Test
+    @DisplayName("평일이고, 디저트 종류가 두가지 일 때, 평일 할인 금액을 정확하게 계산한다.")
+    void calculateWeekdayDiscountAmountCorrectlyWhenDayIsWeekdayAndDesertKindIsTwo() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("바비큐립-1"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("아이스크림-1"));
+        orderList.add(new Order("제로콜라-1"));
+
+        Date date = new Date("3"); // 평일
+
+        Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
+
+        assertThat(appliedBenefit.get(WEEKDAY_DISCOUNT)).isEqualTo(6069);
     }
 }
