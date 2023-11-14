@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     public static void printIntroduction() {
-        System.out.println(INTRODUCE_PROGRAM.getOutputMessage());
+        System.out.println(INTRODUCE_PROGRAM.getOutputMessage() + "\n");
     }
 
     public static void printBenefitGuide(Date date) {
@@ -63,7 +63,7 @@ public class OutputView {
             return;
         }
 
-        filteredOrderList.forEach(System.out::println);
+        filteredOrderList.forEach(order-> System.out.println("- "+order));
     }
 
     public static void printOriginalPaymentAmount(int originalPaymentAmount) {
