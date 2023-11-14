@@ -104,4 +104,17 @@ class ReservationControllerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(INVALID_DATE_MESSAGE.getErrorMessage());
     }
+
+    @Test
+    @DisplayName("registerReservationDateUntilPass 메서드는 유저가 잘못된 값을 입력하면 값을 다시 입력 받는다.")
+    void registerReservationDateUntilPass() {
+        // given
+        System.setIn(createUserInput("a\n0\n1"));
+
+        // when
+        Date date = reservationController.registerReservationDateUntilPass();
+
+        // then
+        assertThat(date.getDay()).isEqualTo(1);
+    }
 }
