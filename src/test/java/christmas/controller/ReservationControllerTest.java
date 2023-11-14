@@ -5,6 +5,7 @@ import static christmas.view.ErrorMessage.*;
 import static org.assertj.core.api.Assertions.*;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.domain.Date;
 import christmas.domain.Order;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,5 +78,30 @@ class ReservationControllerTest {
         assertThat(orderList).hasSize(1);
         assertThat(orderList.get(0).getMenu()).isEqualTo(TAPAS);
         assertThat(orderList.get(0).getCount()).isEqualTo(1);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "15", "31"})
+    void registerReservationDateShouldNotThrowExceptionWhenCorrectValueInputted(String input) {
+        // given
+        System.setIn(createUserInput(input));
+
+        // when
+        Date date = reservationController.registerReservationDate();
+
+        // then
+        assertThat(date.getDay()).isEqualTo(Integer.parseInt(input));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a", "1a", "*", "0", "32"})
+    void registerReservationDateShouldThrowExceptionWhenWrongValueInputted(String input) {
+        // given
+        System.setIn(createUserInput(input));
+
+        // when, then
+        assertThatThrownBy(() -> reservationController.registerReservationDate())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(INVALID_DATE_MESSAGE.getErrorMessage());
     }
 }

@@ -14,6 +14,10 @@ public class Date {
         this.day = Integer.parseInt(userInput);
     }
 
+    public int getDay() {
+        return day;
+    }
+
     private void validate(String userInput) {
         if (!isIntegerNum(userInput))
             throw new IllegalArgumentException(INVALID_DATE_MESSAGE.getErrorMessage());
