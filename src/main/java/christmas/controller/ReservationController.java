@@ -3,6 +3,7 @@ package christmas.controller;
 import static christmas.view.InputView.*;
 import static christmas.view.OutputView.*;
 
+import christmas.domain.Date;
 import christmas.domain.Order;
 import christmas.service.OrderService;
 import christmas.service.PaymentService;
@@ -22,6 +23,11 @@ public class ReservationController {
         List<Order> orderList = receiveOrderUntilPass();
         timeSleep(1500);
         int originalPaymentAmount = calculateAndShowOriginalPaymentAmount(orderList);
+    }
+
+    public Date registerReservationDate() {
+        String userInput = readReservationDate();
+        return new Date(userInput);
     }
 
     public List<Order> receiveOrder() {
