@@ -57,7 +57,10 @@ public class BenefitCalculator {
     }
 
     private int calculateChristmasDDayDiscountAmount() {
-        return 0;
+        if (date.getDay() > 26) {
+            return 0;
+        }
+        return 900 + date.getDay() * 100;
     }
 
     private int calculateWeekdayDiscountAmount() {

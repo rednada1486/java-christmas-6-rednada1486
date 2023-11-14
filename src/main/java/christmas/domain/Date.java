@@ -16,6 +16,14 @@ public class Date {
         this.day = Integer.parseInt(userInput);
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
     public int getDay() {
         return day;
     }
