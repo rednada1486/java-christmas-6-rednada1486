@@ -1,8 +1,5 @@
 package christmas.service;
 
-import static christmas.domain.Benefit.*;
-import static org.assertj.core.api.Assertions.*;
-
 import christmas.domain.Benefit;
 import christmas.domain.Date;
 import christmas.domain.Order;
@@ -11,9 +8,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static christmas.domain.Benefit.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BenefitCalculatorTest {
     private BenefitCalculator benefitCalculator;
@@ -249,7 +250,6 @@ class BenefitCalculatorTest {
             assertThat(appliedBenefit.get(benefit)).isEqualTo(0);
         }
     }
-
 
 
 }

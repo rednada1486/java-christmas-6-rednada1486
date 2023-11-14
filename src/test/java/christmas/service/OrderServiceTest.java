@@ -1,8 +1,9 @@
 package christmas.service;
 
 import static christmas.domain.Menu.*;
-import static christmas.view.ErrorMessage.*;
-import static org.assertj.core.api.Assertions.*;
+import static christmas.view.ErrorMessage.INVALID_ORDER_MESSAGE;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.domain.Order;
 import org.junit.jupiter.api.BeforeEach;

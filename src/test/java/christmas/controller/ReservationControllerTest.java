@@ -1,8 +1,11 @@
 package christmas.controller;
 
-import static christmas.domain.Menu.*;
-import static christmas.view.ErrorMessage.*;
-import static org.assertj.core.api.Assertions.*;
+import static christmas.domain.Menu.TAPAS;
+import static christmas.domain.Menu.ZERO_COLA;
+import static christmas.view.ErrorMessage.INVALID_DATE_MESSAGE;
+import static christmas.view.ErrorMessage.INVALID_ORDER_MESSAGE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.domain.Date;

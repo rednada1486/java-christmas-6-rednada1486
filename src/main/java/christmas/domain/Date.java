@@ -1,15 +1,15 @@
 package christmas.domain;
 
-import static christmas.view.ErrorMessage.*;
-
 import christmas.utils.CalendarUtil;
 
 import java.util.List;
 
+import static christmas.view.ErrorMessage.INVALID_DATE_MESSAGE;
+
 public class Date {
-    private int year;
-    private int month;
-    private int day;
+    private final int year;
+    private final int month;
+    private final int day;
 
     public Date(int year, int month, int day) {
         this.year = year;

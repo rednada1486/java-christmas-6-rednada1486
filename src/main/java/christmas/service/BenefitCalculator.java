@@ -1,15 +1,17 @@
 package christmas.service;
 
-import static christmas.domain.Benefit.*;
-import static christmas.domain.Category.*;
-
 import christmas.domain.Benefit;
 import christmas.domain.Date;
 import christmas.domain.Menu;
 import christmas.domain.Order;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static christmas.domain.Benefit.*;
+import static christmas.domain.Category.DESSERT;
+import static christmas.domain.Category.MAIN_COURSE;
 
 public class BenefitCalculator {
     private Date date;

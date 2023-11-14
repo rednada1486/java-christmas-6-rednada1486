@@ -1,12 +1,12 @@
 package christmas.controller;
 
-import static christmas.view.InputView.*;
+import static christmas.view.InputView.readOrderList;
+import static christmas.view.InputView.readReservationDate;
 import static christmas.view.OutputView.*;
 
 import christmas.domain.Date;
 import christmas.domain.Order;
 import christmas.service.OrderService;
-
 import java.util.ArrayList;
 import java.util.List;
 

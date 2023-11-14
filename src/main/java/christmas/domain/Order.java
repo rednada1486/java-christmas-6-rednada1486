@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import static christmas.view.ErrorMessage.*;
+import static christmas.view.ErrorMessage.INVALID_ORDER_MESSAGE;
 
 import java.util.regex.Pattern;
 

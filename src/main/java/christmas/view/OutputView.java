@@ -63,7 +63,7 @@ public class OutputView {
             return;
         }
 
-        filteredOrderList.forEach(order-> System.out.println("- "+order));
+        filteredOrderList.forEach(order -> System.out.println("- " + order));
     }
 
     public static void printOriginalPaymentAmount(int originalPaymentAmount) {

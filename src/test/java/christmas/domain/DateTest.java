@@ -1,11 +1,11 @@
 package christmas.domain;
 
-import static christmas.view.ErrorMessage.*;
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static christmas.view.ErrorMessage.INVALID_DATE_MESSAGE;
+import static org.assertj.core.api.Assertions.*;
 
 class DateTest {
     @ParameterizedTest
