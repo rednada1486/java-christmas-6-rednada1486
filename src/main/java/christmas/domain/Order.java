@@ -43,7 +43,7 @@ public class Order {
     }
 
     private void validate(String menuHyphenCount) {
-        if (!checkMenuHyphenCount(menuHyphenCount)){
+        if (!checkMenuHyphenCount(menuHyphenCount)) {
             throw new IllegalArgumentException(INVALID_ORDER_MESSAGE.getErrorMessage());
         }
 
@@ -68,14 +68,12 @@ public class Order {
 
         try {
             count = Integer.parseInt(countStr);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
 
         return count >= 1;
     }
-
-
 
 
     @Override
