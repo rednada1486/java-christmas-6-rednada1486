@@ -8,8 +8,8 @@ public enum OutputMessage {
     GIFT_MENU("<증정 메뉴>"),
     BENEFIT_DETAILS("<혜택 내역>"),
     TOTAL_BENEFIT_AMOUNT("<총 혜택 금액>"),
-    ESTIMATED_PAYMENT_AFTER_DISCOUNT("<할인 후 예상 결제 금액>"),
-    DECEMBER_EVETN_BADGE("<12월 이벤트 배지>"),
+    DISCOUNTED_PAYMENT_AMOUNT("<할인 후 예상 결제 금액>"),
+    DECEMBER_EVENT_BADGE("<12월 이벤트 배지>"),
     MENU("------------------------------------메뉴판------------------------------------"),
     DIVIDER_LINE("-----------------------------------------------------------------------------"),
     NOTHING("없음");
