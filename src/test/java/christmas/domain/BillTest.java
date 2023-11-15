@@ -97,6 +97,32 @@ class BillTest {
         assertThat(bill.getTotalBenefitAmount()).isEqualTo(31246);
     }
 
+    @Test
+    @DisplayName("예제에 나온 상황1로 테스트 했을 때, 증정 메뉴 금액을 정확하게 계산한다.")
+    void calculateGiftMenuPriceCorrectlyWhenTestCase1() {
+        // given
+        generateTestCase1();
+
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getGiftMenuPrice()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("예제에 나온 상황2로 테스트 했을 때, 증정 메뉴 금액을 정확하게 계산한다.")
+    void calculateGiftMenuPriceCorrectlyWhenTestCase2() {
+        // given
+        generateTestCase2();
+
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getGiftMenuPrice()).isEqualTo(25000);
+    }
+
 
     void generateTestCase1() {
         // 메뉴 : 타파스-1,제로콜라-1
