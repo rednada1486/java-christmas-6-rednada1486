@@ -127,4 +127,23 @@ class OutputViewTest {
                 .contains("특별 할인: -1,000원")
                 .contains("증정 이벤트: -25,000원");
     }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("총 혜택 금액을 정확하게 출력한다.")
+    void printTotalBenefitAmountCorrectly(int giftMenuPrice, String expected) {
+        // when
+        printTotalBenefitAmount(giftMenuPrice);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<총혜택 금액>", expected);
+    }
+
+    static Stream<Arguments> printTotalBenefitAmountCorrectly() {
+        return Stream.of(
+                Arguments.of(0, "0원"),
+                Arguments.of(31246, "-31,246원")
+        );
+    }
 }
