@@ -77,20 +77,30 @@ public class OutputView {
         System.out.println(TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT.getOutputMessage());
         String formattedNumber = String.format("%,d", originalPaymentAmount);
         System.out.println(formattedNumber + "원");
+        System.out.println();
     }
 
-    private static void printGiftMenu(int giftMenuPrice) {
+    public static void printGiftMenu(int giftMenuPrice) {
+        System.out.println(GIFT_MENU.getOutputMessage());
+
+        if (giftMenuPrice == 0) {
+            System.out.println(NOTHING.getOutputMessage()+"\n");
+            return;
+        }
+
+        System.out.println("샴페인 1개\n");
+
     }
 
-    private static void printBenefitDetails(List<String> benefitDetails) {
+    public static void printBenefitDetails(List<String> benefitDetails) {
     }
 
-    private static void printTotalBenefitAmount(int totalBenefitAmount) {
+    public static void printTotalBenefitAmount(int totalBenefitAmount) {
     }
 
-    private static void printDiscountedPaymentAmount(int discountedPaymentAmount) {
+    public static void printDiscountedPaymentAmount(int discountedPaymentAmount) {
     }
 
-    private static void printDecemberEventBadge(Badge decemberEventBadge) {
+    public static void printDecemberEventBadge(Badge decemberEventBadge) {
     }
 }

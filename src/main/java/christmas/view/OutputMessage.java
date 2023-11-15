@@ -12,7 +12,8 @@ public enum OutputMessage {
     DECEMBER_EVENT_BADGE("<12월 이벤트 배지>"),
     MENU("------------------------------------메뉴판------------------------------------"),
     DIVIDER_LINE("-----------------------------------------------------------------------------"),
-    NOTHING("없음");
+    NOTHING("없음"),
+    ONE_CHAMPAGNE("샴페인 1개");
 
     private final String outputMessage;
 
