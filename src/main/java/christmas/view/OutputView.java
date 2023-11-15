@@ -53,24 +53,17 @@ public class OutputView {
         System.out.println(ORDER_MENU.getOutputMessage());
         for (Category category : Category.values()) {
             printOrderInCategory(orderList, category);
-            System.out.println();
         }
+        System.out.println();
     }
 
     private static void printOrderInCategory(List<Order> orderList, Category category) {
-        System.out.println("* " + category.getName());
-
         List<String> filteredOrderList = orderList.stream()
                 .filter(order -> order.getMenu().getCategory().equals(category))
                 .map(Order::toString)
                 .toList();
 
-        if (filteredOrderList.isEmpty()) {
-            System.out.println(NOTHING.getOutputMessage());
-            return;
-        }
-
-        filteredOrderList.forEach(order -> System.out.println("- " + order));
+        filteredOrderList.forEach(System.out::println);
     }
 
     public static void printOriginalPaymentAmount(int originalPaymentAmount) {
