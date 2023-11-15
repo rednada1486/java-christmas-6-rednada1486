@@ -2,10 +2,7 @@ package christmas.view;
 
 import static christmas.view.OutputMessage.*;
 
-import christmas.domain.Category;
-import christmas.domain.Date;
-import christmas.domain.Menu;
-import christmas.domain.Order;
+import christmas.domain.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +39,16 @@ public class OutputView {
         System.out.println(result);
     }
 
+    public static void printEventBenefitPreview(Bill bill) {
+        printOrderList(bill.getOrderList());
+        printOriginalPaymentAmount(bill.getOriginalPaymentAmount());
+        printGiftMenu(bill.getGiftMenuPrice());
+        printBenefitDetails(bill.getBenefitDetails());
+        printTotalBenefitAmount(bill.getTotalBenefitAmount());
+        printDiscountedPaymentAmount(bill.getDiscountedPaymentAmount());
+        printDecemberEventBadge(bill.getDecemberEventBadge());
+    }
+
     public static void printOrderList(List<Order> orderList) {
         System.out.println(ORDER_MENU.getOutputMessage());
         for (Category category : Category.values()) {
@@ -70,5 +77,20 @@ public class OutputView {
         System.out.println(TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT.getOutputMessage());
         String formattedNumber = String.format("%,d", originalPaymentAmount);
         System.out.println(formattedNumber + "원");
+    }
+
+    private static void printGiftMenu(int giftMenuPrice) {
+    }
+
+    private static void printBenefitDetails(List<String> benefitDetails) {
+    }
+
+    private static void printTotalBenefitAmount(int totalBenefitAmount) {
+    }
+
+    private static void printDiscountedPaymentAmount(int discountedPaymentAmount) {
+    }
+
+    private static void printDecemberEventBadge(Badge decemberEventBadge) {
     }
 }
