@@ -1,11 +1,10 @@
 package christmas.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,5 +33,22 @@ class BillTest {
 
         // then
         assertThat(bill.getOriginalPaymentAmount()).isEqualTo(142000);
+    }
+
+    @Test
+    @DisplayName("예제에 나온 상황으로 테스트 했을 때, 총 혜택 내역을 담은 List를 정확하게 반환한다.")
+    void makeBenefitDetailsCorrectly() {
+        // given, then
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getBenefitDetails())
+                .hasSize(4)
+                .containsSubsequence(
+                        "크리스마스 디데이 할인: -1,200원",
+                        "평일 할인: -4,046원",
+                        "특별 할인: -1,000원",
+                        "증정 이벤트: -25,000원"
+                );
     }
 }
