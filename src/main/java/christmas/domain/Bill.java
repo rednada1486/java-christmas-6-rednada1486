@@ -8,10 +8,11 @@ public class Bill {
     private final BenefitCalculator benefitCalculator = new BenefitCalculator();
 
     private final List<Order> orderList;
-
+    private final int originalPaymentAmount;
 
     public Bill(Date date, List<Order> orderList) {
         this.orderList = orderList;
+        originalPaymentAmount = calculateOriginalPaymentAmount(orderList);
     }
 
     private int calculateOriginalPaymentAmount(List<Order> orderList) {
@@ -22,5 +23,9 @@ public class Bill {
 
     public List<Order> getOrderList() {
         return orderList;
+    }
+
+    public int getOriginalPaymentAmount() {
+        return originalPaymentAmount;
     }
 }
