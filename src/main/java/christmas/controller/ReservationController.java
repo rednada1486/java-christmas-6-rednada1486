@@ -4,13 +4,15 @@ import static christmas.view.InputView.readOrderList;
 import static christmas.view.InputView.readReservationDate;
 import static christmas.view.OutputView.*;
 
+import christmas.domain.Bill;
 import christmas.domain.Date;
 import christmas.domain.Order;
+import christmas.service.BenefitCalculator;
 import christmas.service.OrderService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReservationController {
+public class ReservationController extends BenefitCalculator {
     private final OrderService orderService;
 
     public ReservationController() {
@@ -24,9 +26,7 @@ public class ReservationController {
 
         List<Order> orderList = receiveOrderUntilPass();
 
-        printBenefitGuide(date);
-
-        System.out.println();
+        calculateEventBenefitAndShowEventBenefitPreview(date, orderList);
     }
 
     public Date registerReservationDate() {
@@ -44,8 +44,6 @@ public class ReservationController {
         List<Order> orderList = userInputToOrderList(userInput);
 
         orderService.validateOrderList(orderList);
-
-        printOrderList(orderList);
 
         return orderList;
     }
@@ -68,8 +66,18 @@ public class ReservationController {
         return orderList;
     }
 
+    public void calculateEventBenefitAndShowEventBenefitPreview(Date date, List<Order> orderList) {
+        printBenefitGuide(date);
+
+        Bill bill = new Bill(date, orderList);
+
+        printEventBenefitPreview(bill);
+    }
+
+
+
     public <T> T receiveInputUntilPass(ExceptionSupplier<T> inputMethod) {
-        T result = null;
+        T result;
 
         while (true) {
             try {

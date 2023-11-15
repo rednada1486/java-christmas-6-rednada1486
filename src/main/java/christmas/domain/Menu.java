@@ -13,7 +13,7 @@ public enum Menu {
     BARBECUE_RIBS("바비큐립", 54000, MAIN_COURSE),
     SEAFOOD_PASTA("해산물파스타", 35000, MAIN_COURSE),
     CHRISTMAS_PASTA("크리스마스파스타", 25000, MAIN_COURSE),
-    CHOCOLATE_CAKE("초코케이크", 3000, DESSERT),
+    CHOCOLATE_CAKE("초코케이크", 15000, DESSERT),
     ICE_CREAM("아이스크림", 5000, DESSERT),
     ZERO_COLA("제로콜라", 3000, BEVERAGE),
     RED_WINE("레드와인", 60000, BEVERAGE),

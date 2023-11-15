@@ -1,18 +1,26 @@
 package christmas.view;
 
+
+import static christmas.domain.Badge.*;
 import static christmas.domain.Menu.TAPAS;
 import static christmas.domain.Menu.ZERO_COLA;
+import static christmas.view.OutputView.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.Badge;
 import christmas.domain.Order;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 class OutputViewTest {
     private final PrintStream standardOut = System.out;
@@ -32,7 +40,7 @@ class OutputViewTest {
     @DisplayName("고객에게 메뉴판을 애피타이저, 메인, 디저트, 음료 순으로 출력한다.")
     void printAllMenuCorrectly() {
         // given, when
-        OutputView.printAllMenu();
+        printAllMenu();
         String result = outputStreamCaptor.toString();
 
         // then
@@ -62,10 +70,122 @@ class OutputViewTest {
         int totalPaymentAmount = 8500;
 
         // when
-        OutputView.printOriginalPaymentAmount(totalPaymentAmount);
+        printOriginalPaymentAmount(totalPaymentAmount);
         String result = outputStreamCaptor.toString();
 
         // then
         assertThat(result).contains("<할인 전 총주문 금액>", "8,500원");
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("증정 메뉴를 정확하게 출력한다.")
+    void printGiftMenuCorrectly(int giftMenuPrice, String expected) {
+        // when
+        printGiftMenu(giftMenuPrice);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<증정 메뉴>", expected);
+    }
+
+    static Stream<Arguments> printGiftMenuCorrectly() {
+        return Stream.of(
+                Arguments.of(0, "없음"),
+                Arguments.of(25000, "샴페인 1개")
+        );
+    }
+
+    @Test
+    @DisplayName("혜택 내역이 없는 경우, 혜택 내역을 정확하게 출력한다.")
+    void printBenefitDetailsCorrectlyWhenBenefitIsNothing() {
+        // given
+        List<String> benefitDetails = new ArrayList<>();
+
+        // when
+        printBenefitDetails(benefitDetails);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<혜택 내역>", "없음");
+    }
+
+    @Test
+    @DisplayName("혜택 내역이 존재할 때, 혜택 내역을 정확하게 출력한다.")
+    void printBenefitDetailsCorrectlyWhenBenefitIsExist() {
+        List<String> benefitDetails = List.of(
+                "크리스마스 디데이 할인: -1,200원",
+                "평일 할인: -4,046원",
+                "특별 할인: -1,000원",
+                "증정 이벤트: -25,000원"
+        );
+
+        printBenefitDetails(benefitDetails);
+        String result = outputStreamCaptor.toString();
+
+        assertThat(result).contains("<혜택 내역>")
+                .contains("크리스마스 디데이 할인: -1,200원")
+                .contains("평일 할인: -4,046원")
+                .contains("특별 할인: -1,000원")
+                .contains("증정 이벤트: -25,000원");
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("총 혜택 금액을 정확하게 출력한다.")
+    void printTotalBenefitAmountCorrectly(int totalBenefitAmount, String expected) {
+        // when
+        printTotalBenefitAmount(totalBenefitAmount);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<총혜택 금액>", expected);
+    }
+
+    static Stream<Arguments> printTotalBenefitAmountCorrectly() {
+        return Stream.of(
+                Arguments.of(0, "0원"),
+                Arguments.of(31246, "-31,246원")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("할인 후 결제 금액을 정확하게 출력한다.")
+    void printDiscountedPaymentAmountCorrectly(int discountedPaymentAmount, String expected) {
+        // when
+        printDiscountedPaymentAmount(discountedPaymentAmount);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<할인 후 예상 결제 금액>", expected);
+    }
+
+    static Stream<Arguments> printDiscountedPaymentAmountCorrectly() {
+        return Stream.of(
+                Arguments.of(8500, "8,500원"),
+                Arguments.of(135754, "135,754원")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("12월 이벤트 배지를 정확하게 출력한다.")
+    void printDecemberEventBadgeCorrectly(Badge badge, String expected) {
+        // when
+        printDecemberEventBadge(badge);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<12월 이벤트 배지>", expected);
+    }
+
+    static Stream<Arguments> printDecemberEventBadgeCorrectly() {
+        return Stream.of(
+                Arguments.of(SANTA, "산타"),
+                Arguments.of(TREE, "트리"),
+                Arguments.of(STAR, "별"),
+                Arguments.of(NOTHING, "없음")
+        );
     }
 }
