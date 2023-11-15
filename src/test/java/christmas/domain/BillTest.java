@@ -51,4 +51,14 @@ class BillTest {
                         "증정 이벤트: -25,000원"
                 );
     }
+
+    @Test
+    @DisplayName("예제에 나온 상황으로 테스트 했을 때, 총 혜택 금액을 정확하게 계산한다.")
+    void calculateTotalBenefitAmountCorrectly() {
+        // given, then
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getTotalBenefitAmount()).isEqualTo(31246);
+    }
 }
