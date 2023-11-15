@@ -12,6 +12,7 @@ public class Bill {
     private final int giftMenuPrice;
     private final List<String> benefitDetails;
     private final int totalBenefitAmount;
+    private final int discountedPaymentAmount;
 
     public Bill(Date date, List<Order> orderList) {
         this.orderList = orderList;
@@ -23,6 +24,8 @@ public class Bill {
         giftMenuPrice = calculateGiftMenuPrice(appliedBenefit);
         benefitDetails = makeBenefitDetails(appliedBenefit);
         totalBenefitAmount = calculateTotalBenefitAmount(appliedBenefit);
+
+        discountedPaymentAmount = originalPaymentAmount - totalBenefitAmount + giftMenuPrice;
     }
 
     private int calculateOriginalPaymentAmount(List<Order> orderList) {
@@ -79,5 +82,9 @@ public class Bill {
 
     public int getTotalBenefitAmount() {
         return totalBenefitAmount;
+    }
+
+    public int getDiscountedPaymentAmount() {
+        return discountedPaymentAmount;
     }
 }
