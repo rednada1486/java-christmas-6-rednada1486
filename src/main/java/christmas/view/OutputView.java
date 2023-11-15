@@ -125,5 +125,7 @@ public class OutputView {
     }
 
     public static void printDecemberEventBadge(Badge decemberEventBadge) {
+        System.out.println(DECEMBER_EVENT_BADGE.getOutputMessage());
+        System.out.println(decemberEventBadge.getName());
     }
 }
