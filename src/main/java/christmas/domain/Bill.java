@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static christmas.domain.Badge.*;
+
 public class Bill {
     private final List<Order> orderList;
     private final int originalPaymentAmount;
@@ -13,6 +15,7 @@ public class Bill {
     private final List<String> benefitDetails;
     private final int totalBenefitAmount;
     private final int discountedPaymentAmount;
+    private final Badge decemberEventBadge;
 
     public Bill(Date date, List<Order> orderList) {
         this.orderList = orderList;
@@ -26,6 +29,8 @@ public class Bill {
         totalBenefitAmount = calculateTotalBenefitAmount(appliedBenefit);
 
         discountedPaymentAmount = originalPaymentAmount - totalBenefitAmount + giftMenuPrice;
+
+        decemberEventBadge = calculateDecemberEventBadge(totalBenefitAmount);
     }
 
     private int calculateOriginalPaymentAmount(List<Order> orderList) {
@@ -64,6 +69,22 @@ public class Bill {
         return Menu.CHAMPAGNE.getPrice();
     }
 
+    private Badge calculateDecemberEventBadge(int totalBenefitAmount) {
+        if (totalBenefitAmount >= 20000) {
+            return SANTA;
+        }
+
+        if (totalBenefitAmount >= 15000) {
+            return TREE;
+        }
+
+        if (totalBenefitAmount >= 10000) {
+            return STAR;
+        }
+
+        return NOTHING;
+    }
+
     public List<Order> getOrderList() {
         return orderList;
     }
@@ -86,5 +107,9 @@ public class Bill {
 
     public int getDiscountedPaymentAmount() {
         return discountedPaymentAmount;
+    }
+
+    public Badge getDecemberEventBadge() {
+        return decemberEventBadge;
     }
 }
