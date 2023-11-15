@@ -104,6 +104,16 @@ public class OutputView {
     }
 
     public static void printTotalBenefitAmount(int totalBenefitAmount) {
+        System.out.println(TOTAL_BENEFIT_AMOUNT.getOutputMessage());
+
+        String minus = "";
+
+        if (totalBenefitAmount > 0) {
+            minus = "-";
+        }
+
+        String formattedNumber = String.format("%,d", totalBenefitAmount);
+        System.out.println(minus + formattedNumber + "원");
     }
 
     public static void printDiscountedPaymentAmount(int discountedPaymentAmount) {
