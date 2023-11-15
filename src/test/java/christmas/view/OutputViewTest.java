@@ -1,5 +1,6 @@
 package christmas.view;
 
+
 import static christmas.domain.Menu.TAPAS;
 import static christmas.domain.Menu.ZERO_COLA;
 import static christmas.view.OutputView.*;
@@ -76,6 +77,7 @@ class OutputViewTest {
 
     @ParameterizedTest
     @MethodSource
+    @DisplayName("증정 메뉴를 정확하게 출력한다.")
     void printGiftMenuCorrectly(int giftMenuPrice, String expected) {
         // when
         printGiftMenu(giftMenuPrice);
@@ -90,5 +92,39 @@ class OutputViewTest {
                 Arguments.of(0, "없음"),
                 Arguments.of(25000, "샴페인 1개")
         );
+    }
+
+    @Test
+    @DisplayName("혜택 내역이 없는 경우, 혜택 내역을 정확하게 출력한다.")
+    void printBenefitDetailsCorrectlyWhenBenefitIsNothing() {
+        // given
+        List<String> benefitDetails = new ArrayList<>();
+
+        // when
+        printBenefitDetails(benefitDetails);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<혜택 내역>", "없음");
+    }
+
+    @Test
+    @DisplayName("혜택 내역이 존재할 때, 혜택 내역을 정확하게 출력한다.")
+    void printBenefitDetailsCorrectlyWhenBenefitIsExist() {
+        List<String> benefitDetails = List.of(
+                "크리스마스 디데이 할인: -1,200원",
+                "평일 할인: -4,046원",
+                "특별 할인: -1,000원",
+                "증정 이벤트: -25,000원"
+        );
+
+        printBenefitDetails(benefitDetails);
+        String result = outputStreamCaptor.toString();
+
+        assertThat(result).contains("<혜택 내역>")
+                .contains("크리스마스 디데이 할인: -1,200원")
+                .contains("평일 할인: -4,046원")
+                .contains("특별 할인: -1,000원")
+                .contains("증정 이벤트: -25,000원");
     }
 }
