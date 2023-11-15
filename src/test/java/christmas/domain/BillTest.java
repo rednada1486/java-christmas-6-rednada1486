@@ -2,7 +2,6 @@ package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -12,23 +11,26 @@ class BillTest {
     List<Order> orderList;
     Date date;
 
-    @BeforeEach
-    void beforeEach() {
-        // 메뉴 : 티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1
-        // 날짜 : 12월 3일
-        orderList = new ArrayList<>();
-        orderList.add(new Order("티본스테이크-1"));
-        orderList.add(new Order("바비큐립-1"));
-        orderList.add(new Order("초코케이크-2"));
-        orderList.add(new Order("제로콜라-1"));
+    @Test
+    @DisplayName("예제에 나온 상황1로 테스트 했을 때, 할인 전 총 주문 금액을 정확하게 계산한다.")
+    void calculateOriginalPaymentAmountCorrectlyWhenTestCase1() {
+        // given
+        generateTestCase1();
 
-        date = new Date("3");
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getOriginalPaymentAmount()).isEqualTo(8500);
     }
 
     @Test
-    @DisplayName("예제에 나온 상황으로 테스트 했을 때, 할인 전 총 주문 금액을 정확하게 계산한다.")
-    void calculateOriginalPaymentAmountCorrectly() {
-        // given, then
+    @DisplayName("예제에 나온 상황2로 테스트 했을 때, 할인 전 총 주문 금액을 정확하게 계산한다.")
+    void calculateOriginalPaymentAmountCorrectlyWhenTestCase2() {
+        // given
+        generateTestCase2();
+
+        // when
         Bill bill = new Bill(date, orderList);
 
         // then
@@ -36,9 +38,26 @@ class BillTest {
     }
 
     @Test
-    @DisplayName("예제에 나온 상황으로 테스트 했을 때, 총 혜택 내역을 담은 List를 정확하게 반환한다.")
-    void makeBenefitDetailsCorrectly() {
-        // given, then
+    @DisplayName("예제에 나온 상황1로 테스트 했을 때, 총 혜택 내역을 담은 List를 정확하게 반환한다.")
+    void makeBenefitDetailsCorrectlyWhenTestCase1() {
+        // given
+        generateTestCase1();
+
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getBenefitDetails())
+                .hasSize(0);
+    }
+
+    @Test
+    @DisplayName("예제에 나온 상황2로 테스트 했을 때, 총 혜택 내역을 담은 List를 정확하게 반환한다.")
+    void makeBenefitDetailsCorrectlyWhenTestCase2() {
+        // when
+        generateTestCase2();
+
+        // given
         Bill bill = new Bill(date, orderList);
 
         // then
@@ -53,12 +72,51 @@ class BillTest {
     }
 
     @Test
-    @DisplayName("예제에 나온 상황으로 테스트 했을 때, 총 혜택 금액을 정확하게 계산한다.")
-    void calculateTotalBenefitAmountCorrectly() {
-        // given, then
+    @DisplayName("예제에 나온 상황1로 테스트 했을 때, 총 혜택 금액을 정확하게 계산한다.")
+    void calculateTotalBenefitAmountCorrectlyWhenTestCase1() {
+        // given
+        generateTestCase1();
+
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getTotalBenefitAmount()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("예제에 나온 상황2로 테스트 했을 때, 총 혜택 금액을 정확하게 계산한다.")
+    void calculateTotalBenefitAmountCorrectlyWhenTestCase2() {
+        // given
+        generateTestCase2();
+
+        // when
         Bill bill = new Bill(date, orderList);
 
         // then
         assertThat(bill.getTotalBenefitAmount()).isEqualTo(31246);
+    }
+
+
+    void generateTestCase1() {
+        // 메뉴 : 타파스-1,제로콜라-1
+        // 날짜 : 12월 26일
+        orderList = new ArrayList<>();
+        orderList.add(new Order("타파스-1"));
+        orderList.add(new Order("제로콜라-1"));
+
+        date = new Date("26");
+    }
+
+    void generateTestCase2() {
+        // 메뉴 : 티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1
+        // 날짜 : 12월 3일
+        orderList = new ArrayList<>();
+        orderList.add(new Order("티본스테이크-1"));
+        orderList.add(new Order("바비큐립-1"));
+        orderList.add(new Order("초코케이크-2"));
+        orderList.add(new Order("제로콜라-1"));
+
+        date = new Date("3");
     }
 }
