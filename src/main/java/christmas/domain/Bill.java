@@ -9,6 +9,7 @@ import java.util.Map;
 public class Bill {
     private final List<Order> orderList;
     private final int originalPaymentAmount;
+    private final int giftMenuPrice;
     private final List<String> benefitDetails;
     private final int totalBenefitAmount;
 
@@ -19,6 +20,7 @@ public class Bill {
         BenefitCalculator benefitCalculator = new BenefitCalculator();
         Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
 
+        giftMenuPrice = calculateGiftMenuPrice(appliedBenefit);
         benefitDetails = makeBenefitDetails(appliedBenefit);
         totalBenefitAmount = calculateTotalBenefitAmount(appliedBenefit);
     }
@@ -52,12 +54,23 @@ public class Bill {
                 .sum();
     }
 
+    private int calculateGiftMenuPrice(Map<Benefit, Integer> appliedBenefit) {
+        if (appliedBenefit.get(Benefit.GIFT_EVENT) == 0) {
+            return 0;
+        }
+        return Menu.CHAMPAGNE.getPrice();
+    }
+
     public List<Order> getOrderList() {
         return orderList;
     }
 
     public int getOriginalPaymentAmount() {
         return originalPaymentAmount;
+    }
+
+    public int getGiftMenuPrice() {
+        return giftMenuPrice;
     }
 
     public List<String> getBenefitDetails() {
