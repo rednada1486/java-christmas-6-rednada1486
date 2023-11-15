@@ -117,6 +117,11 @@ public class OutputView {
     }
 
     public static void printDiscountedPaymentAmount(int discountedPaymentAmount) {
+        System.out.println(DISCOUNTED_PAYMENT_AMOUNT.getOutputMessage());
+
+        String formattedNumber = String.format("%,d", discountedPaymentAmount);
+        System.out.println(formattedNumber + "원");
+        System.out.println();
     }
 
     public static void printDecemberEventBadge(Badge decemberEventBadge) {
