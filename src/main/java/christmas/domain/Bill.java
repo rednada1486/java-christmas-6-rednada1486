@@ -10,6 +10,7 @@ public class Bill {
     private final List<Order> orderList;
     private final int originalPaymentAmount;
     private final List<String> benefitDetails;
+    private final int totalBenefitAmount;
 
     public Bill(Date date, List<Order> orderList) {
         this.orderList = orderList;
@@ -19,6 +20,7 @@ public class Bill {
         Map<Benefit, Integer> appliedBenefit = benefitCalculator.makeAppliedBenefit(date, orderList);
 
         benefitDetails = makeBenefitDetails(appliedBenefit);
+        totalBenefitAmount = calculateTotalBenefitAmount(appliedBenefit);
     }
 
     private int calculateOriginalPaymentAmount(List<Order> orderList) {
@@ -43,6 +45,13 @@ public class Bill {
         return benefitDetails;
     }
 
+    private int calculateTotalBenefitAmount(Map<Benefit, Integer> appliedBenefit) {
+        return appliedBenefit.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
     public List<Order> getOrderList() {
         return orderList;
     }
@@ -53,5 +62,9 @@ public class Bill {
 
     public List<String> getBenefitDetails() {
         return benefitDetails;
+    }
+
+    public int getTotalBenefitAmount() {
+        return totalBenefitAmount;
     }
 }
