@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import static christmas.domain.Badge.NOTHING;
+import static christmas.domain.Badge.SANTA;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -149,6 +151,31 @@ class BillTest {
         assertThat(bill.getDiscountedPaymentAmount()).isEqualTo(135754);
     }
 
+    @Test
+    @DisplayName("예제에 나온 상황1로 테스트 했을 때, 12월 이벤트 배지를 정확하게 계산한다.")
+    void awardBadgeCorrectlyWhenTestCase1() {
+        // given
+        generateTestCase1();
+
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getDecemberEventBadge()).isEqualTo(NOTHING);
+    }
+
+    @Test
+    @DisplayName("예제에 나온 상황2로 테스트 했을 때, 12월 이벤트 배지를 정확하게 계산한다.")
+    void awardBadgeCorrectlyWhenTestCase2() {
+        // given
+        generateTestCase2();
+
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getDecemberEventBadge()).isEqualTo(SANTA);
+    }
 
     void generateTestCase1() {
         // 메뉴 : 타파스-1,제로콜라-1
