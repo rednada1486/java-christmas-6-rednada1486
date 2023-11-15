@@ -2,6 +2,7 @@ package christmas.view;
 
 import static christmas.domain.Menu.TAPAS;
 import static christmas.domain.Menu.ZERO_COLA;
+import static christmas.view.OutputView.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.domain.Order;
@@ -9,10 +10,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 class OutputViewTest {
     private final PrintStream standardOut = System.out;
@@ -32,7 +37,7 @@ class OutputViewTest {
     @DisplayName("고객에게 메뉴판을 애피타이저, 메인, 디저트, 음료 순으로 출력한다.")
     void printAllMenuCorrectly() {
         // given, when
-        OutputView.printAllMenu();
+        printAllMenu();
         String result = outputStreamCaptor.toString();
 
         // then
@@ -62,10 +67,28 @@ class OutputViewTest {
         int totalPaymentAmount = 8500;
 
         // when
-        OutputView.printOriginalPaymentAmount(totalPaymentAmount);
+        printOriginalPaymentAmount(totalPaymentAmount);
         String result = outputStreamCaptor.toString();
 
         // then
         assertThat(result).contains("<할인 전 총주문 금액>", "8,500원");
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void printGiftMenuCorrectly(int giftMenuPrice, String expected) {
+        // when
+        printGiftMenu(giftMenuPrice);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<증정 메뉴>", expected);
+    }
+
+    static Stream<Arguments> printGiftMenuCorrectly() {
+        return Stream.of(
+                Arguments.of(0, "없음"),
+                Arguments.of(25000, "샴페인 1개")
+        );
     }
 }
