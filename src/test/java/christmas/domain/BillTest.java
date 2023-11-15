@@ -123,6 +123,32 @@ class BillTest {
         assertThat(bill.getGiftMenuPrice()).isEqualTo(25000);
     }
 
+    @Test
+    @DisplayName("예제에 나온 상황1로 테스트 했을 때, 할인 후 예상 결제 금액을 정확하게 계산한다.")
+    void calculateDiscountedPaymentAmountCorrectlyWhenTestCase1() {
+        // given
+        generateTestCase1();
+
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getDiscountedPaymentAmount()).isEqualTo(8500);
+    }
+
+    @Test
+    @DisplayName("예제에 나온 상황2로 테스트 했을 때, 할인 후 예상 결제 금액을 정확하게 계산한다.")
+    void calculateDiscountedPaymentAmountCorrectlyWhenTestCase2() {
+        // given
+        generateTestCase2();
+
+        // when
+        Bill bill = new Bill(date, orderList);
+
+        // then
+        assertThat(bill.getDiscountedPaymentAmount()).isEqualTo(135754);
+    }
+
 
     void generateTestCase1() {
         // 메뉴 : 타파스-1,제로콜라-1
