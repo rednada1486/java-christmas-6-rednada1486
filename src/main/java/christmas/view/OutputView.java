@@ -84,7 +84,7 @@ public class OutputView {
         System.out.println(GIFT_MENU.getOutputMessage());
 
         if (giftMenuPrice == 0) {
-            System.out.println(NOTHING.getOutputMessage()+"\n");
+            System.out.println(NOTHING.getOutputMessage() + "\n");
             return;
         }
 
@@ -93,6 +93,14 @@ public class OutputView {
     }
 
     public static void printBenefitDetails(List<String> benefitDetails) {
+        System.out.println(BENEFIT_DETAILS.getOutputMessage());
+
+        if (benefitDetails.isEmpty()) {
+            System.out.println(NOTHING.getOutputMessage() + "\n");
+            return;
+        }
+
+        benefitDetails.forEach(System.out::println);
     }
 
     public static void printTotalBenefitAmount(int totalBenefitAmount) {
