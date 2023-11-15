@@ -131,9 +131,9 @@ class OutputViewTest {
     @ParameterizedTest
     @MethodSource
     @DisplayName("총 혜택 금액을 정확하게 출력한다.")
-    void printTotalBenefitAmountCorrectly(int giftMenuPrice, String expected) {
+    void printTotalBenefitAmountCorrectly(int totalBenefitAmount, String expected) {
         // when
-        printTotalBenefitAmount(giftMenuPrice);
+        printTotalBenefitAmount(totalBenefitAmount);
         String result = outputStreamCaptor.toString();
 
         // then
@@ -144,6 +144,25 @@ class OutputViewTest {
         return Stream.of(
                 Arguments.of(0, "0원"),
                 Arguments.of(31246, "-31,246원")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("할인 후 결제 금액을 정확하게 출력한다.")
+    void printDiscountedPaymentAmountCorrectly(int discountedPaymentAmount, String expected) {
+        // when
+        printDiscountedPaymentAmount(discountedPaymentAmount);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<할인 후 예상 결제 금액>", expected);
+    }
+
+    static Stream<Arguments> printDiscountedPaymentAmountCorrectly() {
+        return Stream.of(
+                Arguments.of(8500, "8,500원"),
+                Arguments.of(135754, "135,754원")
         );
     }
 }
