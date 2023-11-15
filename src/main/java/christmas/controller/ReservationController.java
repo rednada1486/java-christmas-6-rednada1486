@@ -45,8 +45,6 @@ public class ReservationController extends BenefitCalculator {
 
         orderService.validateOrderList(orderList);
 
-        printOrderList(orderList);
-
         return orderList;
     }
 
@@ -79,7 +77,7 @@ public class ReservationController extends BenefitCalculator {
 
 
     public <T> T receiveInputUntilPass(ExceptionSupplier<T> inputMethod) {
-        T result = null;
+        T result;
 
         while (true) {
             try {

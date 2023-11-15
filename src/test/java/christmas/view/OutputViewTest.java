@@ -1,11 +1,13 @@
 package christmas.view;
 
 
+import static christmas.domain.Badge.*;
 import static christmas.domain.Menu.TAPAS;
 import static christmas.domain.Menu.ZERO_COLA;
 import static christmas.view.OutputView.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.Badge;
 import christmas.domain.Order;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -163,6 +165,27 @@ class OutputViewTest {
         return Stream.of(
                 Arguments.of(8500, "8,500원"),
                 Arguments.of(135754, "135,754원")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("12월 이벤트 배지를 정확하게 출력한다.")
+    void printDecemberEventBadgeCorrectly(Badge badge, String expected) {
+        // when
+        printDecemberEventBadge(badge);
+        String result = outputStreamCaptor.toString();
+
+        // then
+        assertThat(result).containsSubsequence("<12월 이벤트 배지>", expected);
+    }
+
+    static Stream<Arguments> printDecemberEventBadgeCorrectly() {
+        return Stream.of(
+                Arguments.of(SANTA, "산타"),
+                Arguments.of(TREE, "트리"),
+                Arguments.of(STAR, "별"),
+                Arguments.of(NOTHING, "없음")
         );
     }
 }
