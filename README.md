@@ -34,7 +34,7 @@
 
 프로젝트를 만들어 보았습니다.
 
-![프로젝트 구조](https://velog.velcdn.com/images/rednada1486_/post/12f306ce-d7c1-4ca8-b210-2599ce4e9bc1/image.png)
+![프로젝트 구조](https://velog.velcdn.com/images/rednada1486_/post/c12d7b08-e725-4b81-9e74-f55e64d9856e/image.png)
 
 <br>
 
